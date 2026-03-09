@@ -3,5 +3,6 @@ dafny verify DataTypes.dfy
    dafny verify Select.dfy
    dafny verify OrderBy.dfy
    dafny verify GroupBySum.dfy
+   dafny verify Distinct.dfy
    dafny run Main.dfy
    
