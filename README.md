@@ -11,6 +11,7 @@ A formally verified implementation of core SQL operations in [Dafny](https://daf
 | `Select.dfy` | `SELECT` | Projects specific columns (e.g., `id, salary`) |
 | `OrderBy.dfy` | `ORDER BY` | Sorts rows by salary (ascending/descending) via insertion sort |
 | `GroupBySum.dfy` | `GROUP BY ... SUM()` | Groups by department and computes salary totals |
+| `Distinct.dfy` | `DISTINCT` | Removes duplicate rows (set semantics) |
 | `Main.dfy` | — | Demo program executing all queries on sample employee data |
 | `go` | — | Build & verify script |
 
@@ -35,6 +36,12 @@ A formally verified implementation of core SQL operations in [Dafny](https://daf
 - No duplicate departments in the output
 - Each department's salary sum is correct
 - No phantom departments are introduced
+
+### DISTINCT (Deduplication)
+- No duplicate rows in the output
+- Every output row comes from the input
+- Every input row appears in the output
+- Set equivalence between input and output records
 
 ## Data Model
 
@@ -65,6 +72,7 @@ dafny verify Where.dfy
 dafny verify Select.dfy
 dafny verify OrderBy.dfy
 dafny verify GroupBySum.dfy
+dafny verify Distinct.dfy
 
 # Run the demo
 dafny run Main.dfy
