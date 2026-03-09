@@ -7,6 +7,7 @@ include "Where.dfy"
 include "Select.dfy"
 include "OrderBy.dfy"
 include "GroupBySum.dfy"
+include "Distinct.dfy"
 
 // ============================================================
 // Helper: Print a table
@@ -119,8 +120,21 @@ method Main()
   var grouped := GroupBySum(data);
   PrintAggResults(grouped);
 
-  // ---- Combined Query: WHERE age >= 18, then ORDER BY salary ----
-  print ">> Query 6: WHERE age >= 18 ORDER BY salary ASC\n";
+  // ---- Query 6: DISTINCT on a table with duplicates ----
+  print ">> Query 6: SELECT DISTINCT * (with duplicates added)\n";
+  // Add duplicate rows to demonstrate DISTINCT
+  var dataWithDups: Table := data + [
+    Record(1, 25, 5000, 1),  // duplicate of Alice
+    Record(3, 30, 7000, 1)   // duplicate of Carol
+  ];
+  print "  Before DISTINCT (8 rows, 2 duplicates):\n";
+  PrintTable(dataWithDups);
+  var distinct := Distinct(dataWithDups);
+  print "  After DISTINCT:\n";
+  PrintTable(distinct);
+
+  // ---- Query 7: Combined: WHERE age >= 18, then ORDER BY salary ----
+  print ">> Query 7: WHERE age >= 18 ORDER BY salary ASC\n";
   var step1 := Where(data, 18);
   var step2 := OrderBySalary(step1);
   PrintTable(step2);
